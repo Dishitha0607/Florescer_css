@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  /* Backgrounds */
+  --color-background: #10150f;
+  --color-foreground: #edf3ea;
+
+  /* Cards */
+  --color-card: #171d16;
+  --color-surface: #1d241b;
+
+  /* Olive primary */
+  --color-primary: #6b8f3e;
+
+  /* Light contrasting green */
+  --color-primary-foreground: #cfe7b2;
+
+  /* Secondary earthy green */
+  --color-secondary: #2a3326;
+  --color-secondary-foreground: #a9c98a;
+
+  /* Muted */
+  --color-muted: #30392d;
+  --color-muted-foreground: #98a58f;
+
+  /* Borders */
+  --color-border: #414d3d;
+
+  /* Highlight */
+  --color-highlight: #d6c27a;
+
+  /* Radius */
+  --radius: 0.75rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "Inter", sans-serif;
+  }
+
+  .font-serif {
+    font-family: "Playfair Display", serif;
+  }
+}
+
+@layer components {
+  .glass {
+    background-color: color-mix(
+      in srgb,
+      var(--color-surface) 55%,
+      transparent
+    );
+
+    backdrop-filter: blur(16px);
+
+    border: 1px solid
+      color-mix(in srgb, var(--color-border) 50%, transparent);
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.98) translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+  .glass-strong {
+    background-color: color-mix(
+      in srgb,
+      var(--color-surface) 80%,
+      transparent
+    );
+
+    backdrop-filter: blur(24px);
+
+    border: 1px solid
+      color-mix(in srgb, var(--color-border) 75%, transparent);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 25px
+      color-mix(in srgb, var(--color-primary) 45%, transparent);
+  }
+}
