@@ -1,9 +1,9 @@
 import { Plus, X } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DetailsTab from "../assets/components/DetailsTab";
+import DetailsTab from "../components/DetailsTab";
 import { useRef } from "react";
-import LineItemsTab from "../assets/components/LineItemTab";
+import LineItemsTab from "../components/LineItemTab";
 
 // dummy data
 const requisitions = [

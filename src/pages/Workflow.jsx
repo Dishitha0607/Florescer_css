@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function Workflow() {
   // Dummy data
-  const workflowData = [
+  const [workflowData, setWorkflowData] = useState([
     {
       id: 1,
       fromUser: "JEBA",
@@ -12,25 +12,177 @@ function Workflow() {
       comments: "Purchase Requisition",
       date: "18-May-2026",
       status: "FORWARDED",
+
+      purpose: "For Production",
+
+      description: "Raw material purchase for production department",
+
+      lineItems: [
+        {
+          lineNo: 1,
+          itemCode: "ITM-001",
+          itemDescription: "Cotton Fabric",
+          qty: 20,
+          unitCost: 100,
+          total: 2000,
+        },
+
+        {
+          lineNo: 2,
+          itemCode: "ITM-002",
+          itemDescription: "Buttons",
+          qty: 50,
+          unitCost: 10,
+          total: 500,
+        },
+      ],
+    },
+    {
+      id: 2,
+      fromUser: "ARUN",
+      task: "PURCHASE REQUISITION",
+      detail: "Purchase Requisition from ARUN",
+      trxNo: "PR-2026-005",
+      comments: "Office chair purchase",
+      date: "16-May-2026",
+      status: "FORWARDED",
+
+      purpose: "For Consumption",
+
+      description: "Office chairs for admin department",
+
+      lineItems: [
+        {
+          lineNo: 1,
+          itemCode: "CHR-001",
+          itemDescription: "Office Chair",
+          qty: 10,
+          unitCost: 4500,
+          total: 45000,
+        },
+
+        {
+          lineNo: 2,
+          itemCode: "TBL-002",
+          itemDescription: "Meeting Table",
+          qty: 2,
+          unitCost: 12000,
+          total: 24000,
+        },
+      ],
     },
 
     {
-      id: 2,
-      fromUser: "JEBA",
+      id: 3,
+      fromUser: "KARTHIK",
       task: "PURCHASE ORDER",
-      detail: "Purchase Order from JEBA",
-      trxNo: "PO-2026-002",
-      comments: "Purchase Order",
-      date: "17-May-2026",
-      status: "WAITING",
+      detail: "Purchase Order from KARTHIK",
+      trxNo: "PO-2026-003",
+      comments: "System upgrade purchase",
+      date: "15-May-2026",
+      status: "FORWARDED",
+
+      purpose: "For Production",
+
+      description: "Desktop systems for production team",
+
+      lineItems: [
+        {
+          lineNo: 1,
+          itemCode: "SYS-101",
+          itemDescription: "Desktop Computer",
+          qty: 5,
+          unitCost: 55000,
+          total: 275000,
+        },
+
+        {
+          lineNo: 2,
+          itemCode: "MON-202",
+          itemDescription: "LED Monitor",
+          qty: 5,
+          unitCost: 9000,
+          total: 45000,
+        },
+      ],
     },
-  ];
+
+    {
+      id: 4,
+      fromUser: "PRIYA",
+      task: "PURCHASE REQUISITION",
+      detail: "Purchase Requisition from PRIYA",
+      trxNo: "PR-2026-006",
+      comments: "Maintenance material request",
+      date: "14-May-2026",
+      status: "FORWARDED",
+
+      purpose: "For Maintenance",
+
+      description: "Electrical maintenance materials",
+
+      lineItems: [
+        {
+          lineNo: 1,
+          itemCode: "ELC-301",
+          itemDescription: "Electrical Wire",
+          qty: 100,
+          unitCost: 120,
+          total: 12000,
+        },
+
+        {
+          lineNo: 2,
+          itemCode: "SWT-401",
+          itemDescription: "Switch Board",
+          qty: 20,
+          unitCost: 850,
+          total: 17000,
+        },
+      ],
+    },
+
+    {
+      id: 5,
+      fromUser: "SURESH",
+      task: "PURCHASE ORDER",
+      detail: "Purchase Order from SURESH",
+      trxNo: "PO-2026-004",
+      comments: "Packaging material purchase",
+      date: "13-May-2026",
+      status: "FORWARDED",
+
+      purpose: "For Sales",
+
+      description: "Packaging boxes for shipment section",
+
+      lineItems: [
+        {
+          lineNo: 1,
+          itemCode: "BOX-001",
+          itemDescription: "Carton Box",
+          qty: 500,
+          unitCost: 35,
+          total: 17500,
+        },
+
+        {
+          lineNo: 2,
+          itemCode: "TPE-002",
+          itemDescription: "Packing Tape",
+          qty: 100,
+          unitCost: 90,
+          total: 9000,
+        },
+      ],
+    },
+  ]);
 
   const [selectedWorkflow, setSelectedWorkflow] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-6">
+    <div className="min-h-screen bg-background text-foreground p-6 sm:p-4 md:p-6">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-5xl font-serif text-secondary-foreground">
@@ -46,7 +198,7 @@ function Workflow() {
         </div>
 
         {/* Table */}
-        <div className="overeflow-x-auto">
+        <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-secondary">
               <tr className="text-left text-sm text-muted-foreground">
@@ -62,10 +214,10 @@ function Workflow() {
             </thead>
 
             <tbody>
-              {workflowData.map((item) => (
+              {workflowData.map((item,index) => (
                 <tr
                   key={item.id}
-                  className="border-t border-border hover:bg-secondary/40 transition text-sm"
+                  className={`border-t border-border hover:bg-secondary/40 transition text-sm ${index % 2 === 0 ? "bg-white/5" : "bg-black/5"} hover:bg-secondary/40`}
                 >
                   <td className="px-6 py-4">{item.id}</td>
                   <td
@@ -109,6 +261,8 @@ function Workflow() {
         rounded-3xl
         border border-border
         shadow-2xl
+        max-h-[90vh]
+        overflow-y-auto
       "
           >
             {/* Header */}
@@ -209,7 +363,7 @@ function Workflow() {
                     Workflow Detail
                   </label>
 
-                  <textarea
+                  <input
                     value={selectedWorkflow.detail}
                     readOnly
                     rows={4}
@@ -220,6 +374,64 @@ function Workflow() {
                 px-4 py-3
               "
                   />
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="mt-8">
+                <label className="mb-2 block text-sm text-muted-foreground">
+                  Description
+                </label>
+
+                <textarea
+                  value={selectedWorkflow.description}
+                  readOnly
+                  rows={4}
+                  className="
+      w-full rounded-xl
+      border border-border
+      bg-secondary
+      px-4 py-3
+      resize-none
+    "
+                />
+              </div>
+
+              {/* Line Items */}
+              <div className="mt-10">
+                <h3 className="mb-4 text-xl font-semibold">Line Items</h3>
+
+                <div className="overflow-x-auto rounded-2xl border border-border">
+                  <table className="w-full">
+                    <thead className="bg-secondary">
+                      <tr className="text-left text-sm text-muted-foreground">
+                        <th className="px-4 py-3">Line No</th>
+                        <th className="px-4 py-3">Item Code</th>
+                        <th className="px-4 py-3">Description</th>
+                        <th className="px-4 py-3">Qty</th>
+                        <th className="px-4 py-3">Unit Cost</th>
+                        <th className="px-4 py-3">Total</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {selectedWorkflow.lineItems.map((item, index) => (
+                        <tr key={index} className="border-t border-border">
+                          <td className="px-4 py-3">{item.lineNo}</td>
+
+                          <td className="px-4 py-3">{item.itemCode}</td>
+
+                          <td className="px-4 py-3">{item.itemDescription}</td>
+
+                          <td className="px-4 py-3">{item.qty}</td>
+
+                          <td className="px-4 py-3">{item.unitCost}</td>
+
+                          <td className="px-4 py-3">{item.total}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
@@ -234,17 +446,22 @@ function Workflow() {
                 {/* Reject */}
                 <button
                   onClick={() => {
-                    alert("Workflow Rejected");
+                    const updateWorkflow = workflowData.map((item) => {
+                      if (item.id === selectedWorkflow.id) {
+                        return { ...item, status: "REJECTED" };
+                      }
+                      return item;
+                    });
+                    setWorkflowData(updateWorkflow);
+
+                    setSelectedWorkflow({
+                      ...selectedWorkflow,
+                      status: "REJECTED",
+                    });
+                    alert("Workflow Approved");
                     setIsModalOpen(false);
                   }}
-                  className="
-              rounded-xl
-              bg-red-500
-              px-6 py-3
-              text-white
-              transition
-              hover:opacity-90
-            "
+                  className="rounded-xl bg-red-400 px-8 py-4 text-white transition hover:opacity-90"
                 >
                   Reject
                 </button>
@@ -252,17 +469,22 @@ function Workflow() {
                 {/* Approve */}
                 <button
                   onClick={() => {
+                    const updateWorkflow = workflowData.map((item) => {
+                      if (item.id === selectedWorkflow.id) {
+                        return { ...item, status: "APPROVED" };
+                      }
+                      return item;
+                    });
+                    setWorkflowData(updateWorkflow);
+
+                    setSelectedWorkflow({
+                      ...selectedWorkflow,
+                      status: "APPROVED",
+                    });
                     alert("Workflow Approved");
                     setIsModalOpen(false);
                   }}
-                  className="
-              rounded-xl
-              bg-primary
-              px-6 py-3
-              text-white
-              transition
-              hover:opacity-90
-            "
+                  className="rounded-xl bg-primary px-6 py-3 text-white transition hover:opacity-90"
                 >
                   Approve
                 </button>

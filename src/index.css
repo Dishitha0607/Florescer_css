@@ -1,6 +1,39 @@
 @import "tailwindcss";
 
-@theme {
+:root {
+  /* Backgrounds */
+  --color-background: #8ca26f;
+  --color-foreground: #1f2b1b;
+
+  /* Cards */
+  --color-card: #f3f7ee;
+  --color-surface: #dce7d1;
+
+  /* Primary olive */
+  --color-primary: #5f7f37;
+
+  /* Primary text */
+  --color-primary-foreground: #ffffff;
+
+  /* Secondary */
+  --color-secondary: #c7d4bb;
+  --color-secondary-foreground: #425535;
+
+  /* Muted */
+  --color-muted: #b8c6ac;
+  --color-muted-foreground: #5f7055;
+
+  /* Borders */
+  --color-border: #7f9271;
+
+  /* Highlight */
+  --color-highlight: #d6c46d;
+
+  /* Radius */
+  --radius: 0.75rem;
+}
+
+.dark {
   /* Backgrounds */
   --color-background: #10150f;
   --color-foreground: #edf3ea;
@@ -30,7 +63,30 @@
   --color-highlight: #d6c27a;
 
   /* Radius */
-  --radius: 0.75rem;
+  --radius:0.75rem;
+}
+
+@theme inline {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+
+  --color-card: var(--color-card);
+  --color-surface: var(--color-surface);
+
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-foreground);
+
+  --color-secondary: var(--color-secondary);
+  --color-secondary-foreground: var(--color-secondary-foreground);
+
+  --color-muted: var(--color-muted);
+  --color-muted-foreground: var(--color-muted-foreground);
+
+  --color-border: var(--color-border);
+
+  --color-highlight: var(--color-highlight);
+
+  --radius: var(--radius);
 }
 
 @layer base {
@@ -63,16 +119,16 @@
       color-mix(in srgb, var(--color-border) 50%, transparent);
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: scale(0.98) translateY(10px);
-    }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(10px);
+  }
 
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .animate-fade-in {

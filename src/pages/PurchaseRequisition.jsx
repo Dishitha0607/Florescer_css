@@ -35,7 +35,7 @@ const requisitions = [
   },
 ];
 
-function PurchaseRequisition() {
+function PurchaseRequisition({ darkMode, setDarkMode }) {
   const year = new Date().getFullYear();
   const nextNumber = requisitions.length + 1;
   const requisitionsNumber = `PR-${year}-${String(nextNumber).padStart(3, "0")}`;
@@ -63,32 +63,39 @@ function PurchaseRequisition() {
           </p>
         </div>
 
-        {/* Right */}
-        <button
-          onClick={() => navigate("/purchase-requisition/new")}
-          className="
-            flex items-center gap-2
-            rounded-xl
-            bg-primary px-5 py-3
-            text-sm font-medium text-white
-            shadow-lg
-            transition-all duration-300
-            hover:opacity-90
-          "
-        >
-          <Plus size={18} />
-          New Purchase Requisition
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="
+      rounded-xl
+      bg-primary
+      px-5 py-3
+      text-white
+      transition
+      hover:opacity-90
+    "
+          >
+            {darkMode ? "Light Mode" : "Dark Mode"}
+          </button>
+
+          <button
+            onClick={() => navigate("/purchase-requisition/new")}
+            className="flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-medium bg-secondary-foreground text-white shadow-lg transition-all duration-300 hover:opacity-90 "
+          >
+            <Plus size={18} />
+            New Purchase Requisition
+          </button>
+        </div>
       </div>
 
       {/* Table Card */}
       <div
         className="
-          glass
-          rounded-2xl
-          border border-border
-          overflow-hidden
-        "
+            glass
+            rounded-2xl
+            border border-border
+            overflow-hidden
+          "
       >
         {/* Table Header */}
         <div className="border-b border-border px-6 py-4">
@@ -114,10 +121,10 @@ function PurchaseRequisition() {
                 <tr
                   key={req.id}
                   className="
-        border-t border-border
-        transition-all duration-200
-        hover:bg-white/5
-      "
+          border-t border-border
+          transition-all duration-200
+          hover:bg-white/5
+        "
                 >
                   <td className="px-6 py-4 font-medium">{req.reqNo}</td>
 
@@ -128,16 +135,16 @@ function PurchaseRequisition() {
                   <td className="px-6 py-4">
                     <span
                       className={`
-            rounded-full px-3 py-1 text-xs font-medium
+              rounded-full px-4 py-2 text-sm font-medium
 
-            ${
-              req.status === "Approved"
-                ? "bg-green-500/20 text-green-400"
-                : req.status === "Forwarded"
-                  ? "bg-blue-500/20 text-blue-400"
-                  : "bg-yellow-500/20 text-yellow-400"
-            }
-          `}
+              ${
+                req.status === "Approved"
+                  ? "bg-green-500/80 text-green-100"
+                  : req.status === "Forwarded"
+                    ? "bg-blue-500/80 text-blue-100"
+                    : "px-8 bg-yellow-500/80 text-yellow-100"
+              }
+            `}
                     >
                       {req.status}
                     </span>
