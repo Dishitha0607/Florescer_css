@@ -1,0 +1,123 @@
+{
+  "requisitions": [
+    {
+      "id": "1",
+      "reqNo": "PR-2026-001",
+      "trxType": "Office Supplies",
+      "date": "15-May-2026",
+      "status": "New",
+      "purpose": "Printer and stationery purchase",
+      "items": 4
+    },
+    {
+      "id": "2",
+      "reqNo": "PR-2026-002",
+      "trxType": "IT Equipment",
+      "date": "14-May-2026",
+      "status": "Forwarded",
+      "purpose": "New laptops for developers",
+      "items": 7
+    },
+    {
+      "reqNo": "PR-2026-001",
+      "trxType": "Purchase Requisition",
+      "date": "2026-05-19",
+      "status": "New",
+      "purpose": "For Sales",
+      "description": "description-ex",
+      "items": 1,
+      "lineItems": [
+        {
+          "lineNo": 1,
+          "itemCode": "RM0001",
+          "description": "Cotton Packs",
+          "qty": "65",
+          "unitCost": "20",
+          "total": 1300
+        }
+      ],
+      "id": "Mx-p2kAdXT0"
+    },
+    {
+      "id": "2lFief0phhY",
+      "reqNo": "PR-2026-001",
+      "trxType": "Purchase Requisition",
+      "date": "2026-05-19",
+      "status": "New",
+      "purpose": "For Maintenance",
+      "description": "description-9045",
+      "costCenter": "center32905",
+      "poClass": "standard",
+      "billTo": "EUROCOT",
+      "subInventory": "IM01",
+      "items": 1,
+      "lineItems": [
+        {
+          "lineNo": 1,
+          "itemCode": "RM0097",
+          "description": "Bottle",
+          "qty": "897",
+          "unitCost": "52",
+          "total": 46644
+        }
+      ]
+    },
+    {
+      "reqNo": "PR-2026-001",
+      "trxType": "Purchase Requisition",
+      "date": "2026-05-19",
+      "status": "New",
+      "purpose": "For Sales",
+      "description": "description-9325",
+      "costCenter": "center-18947",
+      "poClass": "subcontract",
+      "billTo": "EUROCOT",
+      "subInventory": "RM",
+      "items": 2,
+      "lineItems": [
+        {
+          "lineNo": 1,
+          "itemCode": "FG090856",
+          "description": "Brick",
+          "qty": "5",
+          "unitCost": "649",
+          "total": 3245
+        },
+        {
+          "lineNo": 2,
+          "itemCode": "FG089",
+          "description": "XYZ",
+          "qty": "845",
+          "unitCost": "5",
+          "total": 4225
+        }
+      ],
+      "id": "EmgICwJ_Dw0"
+    },
+    {
+      "reqNo": "PR-2026-001",
+      "trxType": "Purchase Requisition",
+      "date": "2026-05-19",
+      "status": "New",
+      "purpose": "For Sales",
+      "description": "desjku-876",
+      "costCenter": "ABC",
+      "poClass": "standard",
+      "billTo": "RND",
+      "subInventory": "RM",
+      "items": 1,
+      "lineItems": [
+        {
+          "lineNo": 1,
+          "itemCode": "RM0897",
+          "description": "Cotton",
+          "qty": "85",
+          "unitCost": "5225",
+          "total": 444125
+        }
+      ],
+      "id": "-pyAxD2WS-U"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

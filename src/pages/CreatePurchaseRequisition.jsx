@@ -1,29 +1,12 @@
 import { Plus, X } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import DetailsTab from "../components/DetailsTab";
 import { useRef } from "react";
 import LineItemsTab from "../components/LineItemTab";
 
-// dummy data
-const requisitions = [
-  {
-    id: 1,
-    reqNo: "PR-2026-001",
-  },
-
-  {
-    id: 2,
-    reqNo: "PR-2026-002",
-  },
-
-  {
-    id: 3,
-    reqNo: "PR-2026-003",
-  },
-];
-
 function CreatePurchaseRequisition() {
+  const [requisitions, setRequisitions] = useState([]);
   const year = new Date().getFullYear();
   const nextNumber = requisitions.length + 1;
   const requisitionsNumber = `PR-${year}-${String(nextNumber).padStart(3, "0")}`;
@@ -32,6 +15,10 @@ function CreatePurchaseRequisition() {
   const [formData, setFormData] = useState({
     description: "",
     purpose: "",
+    costCenter: "",
+    poClass: "",
+    billTo: "",
+    subInventory: "",
   });
   const isFormValid =
     formData.purpose.trim() != "" && formData.description.trim() != "";
@@ -41,28 +28,71 @@ function CreatePurchaseRequisition() {
   const [isLineItemModalOpen, setIsLineItemModalOpen] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const detailsSectionRef = useRef(null);
+  const { id } = useParams();
 
-  function handleUpdate() {
+  // Loading exisiting data
+  useEffect(() => {
+    if (id) {
+      fetch(`http://localhost:3001/requisitions/${id}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setFormData({
+            description: data.description || "",
+            purpose: data.purpose || "",
+            reqNo: data.reqNo || "", // keep it
+            costCenter: data.costCenter || "",
+            poClass: data.poClass || "",
+            billTo: data.billTo || "",
+            subInventory: data.subInventory || "",
+          });
+
+          setLineItems(data.lineItems || []);
+
+          setShowDetailsSection(true);
+
+          setIsUpdated(true);
+        });
+    }
+  }, [id]);
+
+  async function handleUpdate() {
     const requisitionData = {
-      requisitionNo: requisitionsNumber,
-      requisitionDate: today,
-      ...formData,
+      reqNo: formData.reqNo || requisitionsNumber,
+      trxType: "Purchase Requisition",
+      date: today,
+      status: "New",
+
+      purpose: formData.purpose,
+      description: formData.description,
+      costCenter: formData.costCenter,
+      poClass: formData.poClass,
+      billTo: formData.billTo,
+      subInventory: formData.subInventory,
+
+      items: lineItems.length,
       lineItems,
     };
 
-    console.log(requisitionData);
+    try {
+      const url = id
+        ? `http://localhost:3001/requisitions/${id}`
+        : "http://localhost:3001/requisitions";
 
-    // store into localStorage
-    const existingData = JSON.parse(localStorage.getItem("requisitions")) || [];
+      const method = id ? "PUT" : "POST";
 
-    localStorage.setItem(
-      "requisitions",
-      JSON.stringify([...existingData, requisitionData]),
-    );
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(id ? { ...requisitionData, id } : requisitionData),
+      });
 
-    alert("Purchase Requisition Updated Successfully!");
+      await response.json();
 
-    setIsUpdated(true);
+      alert(id ? "Updated Successfully!" : "Created Successfully!");
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -82,7 +112,7 @@ function CreatePurchaseRequisition() {
           >
             <div>
               <h2 className="text-2xl font-bold font-serif">
-                New Purchase Requisition
+                {id ? "Edit Purchase Requisition" : "New Purchase Requisition"}
               </h2>
             </div>
 
@@ -128,7 +158,11 @@ function CreatePurchaseRequisition() {
                 </label>
                 <input
                   type="text"
-                  value={requisitionsNumber}
+                  value={
+                    id
+                      ? `PR-2026-${String(id).padStart(3, "0")}`
+                      : requisitionsNumber
+                  }
                   readOnly
                   className="w-full rounded-xl border border-border px-4 py-3 bg-sencodary outline-none transistion focus:border-primary"
                 />
@@ -194,7 +228,7 @@ function CreatePurchaseRequisition() {
             {/* Footer */}
             <div className="mt-8 flex justify-end gap-4 border-t border-border pt-6">
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => navigate("/")}
                 className="rounded-xl bg-primary px-6 py-3 transition hover:bg-white/50"
               >
                 Cancle
@@ -243,7 +277,9 @@ function CreatePurchaseRequisition() {
                 </div>
 
                 {/* Tab Content */}
-                {activeTab === "details" && <DetailsTab />}
+                {activeTab === "details" && (
+                  <DetailsTab formData={formData} setFormData={setFormData} />
+                )}
                 {activeTab === "lineItems" && (
                   <LineItemsTab
                     lineItems={lineItems}

@@ -1,45 +1,15 @@
 import { Plus, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// Dummy Values
-const requisitions = [
-  {
-    id: 1,
-    reqNo: "PR-2026-001",
-    trxType: "Office Supplies",
-    date: "15-May-2026",
-    status: "New",
-    purpose: "Printer and stationery purchase",
-    items: 4,
-  },
-
-  {
-    id: 2,
-    reqNo: "PR-2026-002",
-    trxType: "IT Equipment",
-    date: "14-May-2026",
-    status: "Forwarded",
-    purpose: "New laptops for developers",
-    items: 7,
-  },
-
-  {
-    id: 3,
-    reqNo: "PR-2026-003",
-    trxType: "Maintenance",
-    date: "12-May-2026",
-    status: "Approved",
-    purpose: "Air conditioner servicing",
-    items: 2,
-  },
-];
+import requisitionsData from "../data/requisitions.json";
 
 function PurchaseRequisition({ darkMode, setDarkMode }) {
-  const year = new Date().getFullYear();
-  const nextNumber = requisitions.length + 1;
-  const requisitionsNumber = `PR-${year}-${String(nextNumber).padStart(3, "0")}`;
-  const today = new Date().toISOString().split("T")[0];
+  const [requisitions, setRequisitions] = useState(requisitionsData);
+  useEffect(() => {
+    fetch("http://localhost:3001/requisitions")
+      .then((res) => res.json())
+      .then((data) => setRequisitions(data));
+  }, []);
   const navigate = useNavigate();
 
   return (
@@ -126,7 +96,16 @@ function PurchaseRequisition({ darkMode, setDarkMode }) {
           hover:bg-white/5
         "
                 >
-                  <td className="px-6 py-4 font-medium">{req.reqNo}</td>
+                  <td className="px-6 py-4 font-medium">
+                    <button
+                      onClick={() =>
+                        navigate(`/purchase-requisition/edit/${req.id}`)
+                      }
+                      className="hover:text-blue-400 hover:underline"
+                    >
+                      {req.reqNo}
+                    </button>
+                  </td>
 
                   <td className="px-6 py-4">{req.trxType}</td>
 
